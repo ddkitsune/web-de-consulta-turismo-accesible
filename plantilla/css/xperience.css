@@ -52,7 +52,11 @@ header {
 nav ul {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 nav ul li a {

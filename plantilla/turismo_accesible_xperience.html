@@ -39,48 +39,59 @@
                 </button>
 
                 <ul class="nav-menu">
-                    <li><a href="#">INICIO</a></li>
+                    <li><a href="#" data-i18n="nav.home">INICIO</a></li>
 
                     <li class="dropdown">
-                        <a href="#">EL MINISTERIO <i class="fas fa-chevron-down"></i></a>
+                        <a href="#"><span data-i18n="nav.ministry">EL MINISTERIO</span> <i
+                                class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-content">
-                            <li><a href="#">MISIÓN Y VISIÓN</a></li>
-                            <li><a href="#">ORGANIGRAMA</a></li>
-                            <li><a href="#">MINISTRA</a></li>
-                            <li><a href="#">COMPETENCIAS</a></li>
+                            <li><a href="#" data-i18n="nav.mission">MISIÓN Y VISIÓN</a></li>
+                            <li><a href="#" data-i18n="nav.org">ORGANIGRAMA</a></li>
+                            <li><a href="#" data-i18n="nav.minister">MINISTRA</a></li>
+                            <li><a href="#" data-i18n="nav.competence">COMPETENCIAS</a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown">
-                        <a href="#">ORGANISMOS ADSCRITOS <i class="fas fa-chevron-down"></i></a>
+                        <a href="#"><span data-i18n="nav.entities">ORGANISMOS ADSCRITOS</span> <i
+                                class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-content">
                             <li><a href="#">INATUR</a></li>
                             <li><a href="#">VENTEL</a></li>
                             <li><a href="#">VENETUR</a></li>
                             <li><a href="#">SOGATUR</a></li>
-                            <li><a href="#">FUNDACIONES Y CORPORACIONES</a></li>
+                            <li><a href="#" data-i18n="nav.foundations">FUNDACIONES Y CORPORACIONES</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="#">NOTICIAS</a></li>
+                    <li><a href="#" data-i18n="nav.news">NOTICIAS</a></li>
 
                     <li class="dropdown">
-                        <a href="#">TRÁMITES Y SERVICIOS <i class="fas fa-chevron-down"></i></a>
+                        <a href="#"><span data-i18n="nav.services">TRÁMITES Y SERVICIOS</span> <i
+                                class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-content">
-                            <li><a href="#">REGISTRO TURISTICO NACIONAL (RTN)</a></li>
-                            <li><a href="#">LICENCIAS</a></li>
-                            <li><a href="#">RTN Y LICENCIA DIGITAL</a></li>
-                            <li><a href="#">RUTAS TURÍSTICAS</a></li>
-                            <li><a href="#">CATEGORIZACIÓN</a></li>
-                            <li><a href="#">CERTIFICACIÓN</a></li>
-                            <li><a href="#">LIBRO OFICIAL</a></li>
-                            <li><a href="#">PLACA DE IDENTIFICACIÓN</a></li>
-                            <li><a href="#">FACTIBILIDAD TÉCNICA</a></li>
+                            <li><a href="#" data-i18n="nav.rtn">REGISTRO TURISTICO NACIONAL (RTN)</a></li>
+                            <li><a href="#" data-i18n="nav.license">LICENCIAS</a></li>
+                            <li><a href="#" data-i18n="nav.digital_rtn">RTN Y LICENCIA DIGITAL</a></li>
+                            <li><a href="#" data-i18n="nav.routes">RUTAS TURÍSTICAS</a></li>
+                            <li><a href="#" data-i18n="nav.cat">CATEGORIZACIÓN</a></li>
+                            <li><a href="#" data-i18n="nav.cert">CERTIFICACIÓN</a></li>
+                            <li><a href="#" data-i18n="nav.book">LIBRO OFICIAL</a></li>
+                            <li><a href="#" data-i18n="nav.plate">PLACA DE IDENTIFICACIÓN</a></li>
+                            <li><a href="#" data-i18n="nav.tech">FACTIBILIDAD TÉCNICA</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="#">PREVENCIÓN DE LC/FT/FPADM</a></li>
-                    <li><a href="#">GUÍA TURÍSTICA</a></li>
+                    <li><a href="#" data-i18n="nav.prevention">PREVENCIÓN DE LC/FT/FPADM</a></li>
+                    <li><a href="#" data-i18n="nav.guide">GUÍA TURÍSTICA</a></li>
+
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-globe"></i> <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-content" style="min-width: 120px;">
+                            <li><a href="#" onclick="changeLanguage('es')">ESPAÑOL</a></li>
+                            <li><a href="#" onclick="changeLanguage('en')">ENGLISH</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -88,11 +99,13 @@
         <!-- Hero Section -->
         <section class="hero"
             style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1531279554030-97426613388a?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;">
-            <h1>Venezuela para Todos</h1>
-            <p>Descubre los destinos más espectaculares de nuestra tierra con total accesibilidad y servicios adaptados
+            <h1 data-i18n="hero.title">Venezuela para Todos</h1>
+            <p data-i18n="hero.subtitle">Descubre los destinos más espectaculares de nuestra tierra con total
+                accesibilidad y servicios adaptados
                 a tus necesidades.</p>
             <div class="hero-btns">
-                <a href="#" class="btn-reserve" style="background: var(--secondary);">Ver Destinos</a>
+                <a href="#" class="btn-reserve" style="background: var(--secondary);" data-i18n="hero.cta">Ver
+                    Destinos</a>
             </div>
         </section>
 
@@ -100,36 +113,37 @@
         <section class="services">
             <div class="service-card">
                 <i class="fas fa-map-marked-alt"></i>
-                <h3>Viajes a Medida</h3>
-                <p>Diseñamos tu experiencia personalizada por toda Venezuela.</p>
+                <h3 data-i18n="services.custom.title">Viajes a Medida</h3>
+                <p data-i18n="services.custom.desc">Diseñamos tu experiencia personalizada por toda Venezuela.</p>
             </div>
             <div class="service-card">
                 <i class="fas fa-users"></i>
-                <h3>Viajes en Grupo</h3>
-                <p>Salidas programadas con asistencia técnica especializada.</p>
+                <h3 data-i18n="services.group.title">Viajes en Grupo</h3>
+                <p data-i18n="services.group.desc">Salidas programadas con asistencia técnica especializada.</p>
             </div>
             <div class="service-card">
                 <i class="fas fa-wheelchair"></i>
-                <h3>Rutas Adaptadas</h3>
-                <p>Circuitos verificados para movilidad reducida.</p>
+                <h3 data-i18n="services.adapted.title">Rutas Adaptadas</h3>
+                <p data-i18n="services.adapted.desc">Circuitos verificados para movilidad reducida.</p>
             </div>
             <div class="service-card">
                 <i class="fas fa-ship"></i>
-                <h3>Cruceros y Yates</h3>
-                <p>Explora nuestras costas y archipiélagos sin barreras.</p>
+                <h3 data-i18n="services.cruises.title">Cruceros y Yates</h3>
+                <p data-i18n="services.cruises.desc">Explora nuestras costas y archipiélagos sin barreras.</p>
             </div>
             <div class="service-card">
                 <i class="fa-solid fa-circle-user"></i>
-                <h3>Iterpretes</h3>
-                <p>Personal capacitado en lenguaje de señas.</p>
+                <h3 data-i18n="services.interpreters.title">Iterpretes</h3>
+                <p data-i18n="services.interpreters.desc">Personal capacitado en lenguaje de señas.</p>
             </div>
         </section>
 
         <!-- Featured Destinations -->
         <section class="destinations">
             <div class="section-header">
-                <h2>Nuestros Destinos Accesibles</h2>
-                <p>Seleccionamos los mejores rincones de Venezuela con infraestructura garantizada.</p>
+                <h2 data-i18n="destinations.title">Nuestros Destinos Accesibles</h2>
+                <p data-i18n="destinations.subtitle">Seleccionamos los mejores rincones de Venezuela con infraestructura
+                    garantizada.</p>
             </div>
 
             <div class="destinations-grid">
@@ -140,10 +154,11 @@
                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="dest-content">
-                        <h3>Canaima: La Selva Ancestral</h3>
-                        <p>Disfruta de la majestuosidad del Salto Ángel con traslados adaptados y alojamientos de primer
+                        <h3 data-i18n="destinations.canaima.title">Canaima: La Selva Ancestral</h3>
+                        <p data-i18n="destinations.canaima.desc">Disfruta de la majestuosidad del Salto Ángel con
+                            traslados adaptados y alojamientos de primer
                             nivel en el corazón de la selva.</p>
-                        <a href="#" class="btn-outline">Ver Itinerario</a>
+                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
                     </div>
                 </div>
 
@@ -154,10 +169,11 @@
                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="dest-content">
-                        <h3>Morrocoy: Playas Turquesa</h3>
-                        <p>Cayos con pasarelas de madera, sillas anfibias y personal capacitado para que vivas el Caribe
+                        <h3 data-i18n="destinations.morrocoy.title">Morrocoy: Playas Turquesa</h3>
+                        <p data-i18n="destinations.morrocoy.desc">Cayos con pasarelas de madera, sillas anfibias y
+                            personal capacitado para que vivas el Caribe
                             venezolano sin límites.</p>
-                        <a href="#" class="btn-outline">Ver Itinerario</a>
+                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
                     </div>
                 </div>
 
@@ -168,10 +184,11 @@
                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="dest-content">
-                        <h3>Caracas: Cultura y Ciudad</h3>
-                        <p>Un recorrido por el centro histórico, el Teleférico Warairarepano y los museos más
+                        <h3 data-i18n="destinations.caracas.title">Caracas: Cultura y Ciudad</h3>
+                        <p data-i18n="destinations.caracas.desc">Un recorrido por el centro histórico, el Teleférico
+                            Warairarepano y los museos más
                             emblemáticos con accesibilidad total.</p>
-                        <a href="#" class="btn-outline">Ver Itinerario</a>
+                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
                     </div>
                 </div>
             </div>
@@ -180,45 +197,48 @@
         <!-- Testimonials -->
         <section class="testimonials">
             <div class="section-header">
-                <h2>Experiencias que Inspiran</h2>
+                <h2 data-i18n="testimonials.title">Experiencias que Inspiran</h2>
             </div>
             <div class="testimonial-grid">
                 <div class="testimonial-card">
                     <i class="fas fa-quote-right quote"></i>
-                    <p>"Pensé que nunca podría ver el Salto Ángel de cerca. Gracias al equipo de MINTUR, la logística
+                    <p data-i18n="testimonials.1.text">"Pensé que nunca podría ver el Salto Ángel de cerca. Gracias al
+                        equipo de MINTUR, la logística
                         fue perfecta y pude disfrutar de la maravilla del mundo."</p>
                     <div class="user-info">
                         <div class="user-img" style="background: url('https://i.pravatar.cc/150?u=1') center/cover;">
                         </div>
                         <div>
                             <strong>Andrés R.</strong>
-                            <br><small>Viajero de Caracas</small>
+                            <br><small data-i18n="testimonials.1.role">Viajero de Caracas</small>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
                     <i class="fas fa-quote-right quote"></i>
-                    <p>"La playa en Morrocoy fue una sorpresa increíble. Las sillas anfibias funcionan de maravilla y el
+                    <p data-i18n="testimonials.2.text">"La playa en Morrocoy fue una sorpresa increíble. Las sillas
+                        anfibias funcionan de maravilla y el
                         personal es extremadamente amable y atento."</p>
                     <div class="user-info">
                         <div class="user-img" style="background: url('https://i.pravatar.cc/150?u=2') center/cover;">
                         </div>
                         <div>
                             <strong>Mariana V.</strong>
-                            <br><small>Turista Internacional</small>
+                            <br><small data-i18n="testimonials.2.role">Turista Internacional</small>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
                     <i class="fas fa-quote-right quote"></i>
-                    <p>"Viajar en grupo con Inatur nos dio la seguridad que necesitábamos. Todo el viaje estuvo
+                    <p data-i18n="testimonials.3.text">"Viajar en grupo con Inatur nos dio la seguridad que
+                        necesitábamos. Todo el viaje estuvo
                         cronometrado y sin barreras arquitectónicas."</p>
                     <div class="user-info">
                         <div class="user-img" style="background: url('https://i.pravatar.cc/150?u=3') center/cover;">
                         </div>
                         <div>
                             <strong>Carlos T.</strong>
-                            <br><small>Viajero en Familia</small>
+                            <br><small data-i18n="testimonials.3.role">Viajero en Familia</small>
                         </div>
                     </div>
                 </div>
@@ -228,8 +248,9 @@
         <!-- Footer (from index.html) -->
         <footer class="main-footer">
             <div class="footer-content">
-                <p>Ministerio Del Poder Popular para el Turismo (Mintur) G-20013132-2</p>
-                <p>Av. Principal de La Floresta con Av. Francisco de Miranda, Complejo Mintur Caracas, Edo.Miranda</p>
+                <p data-i18n="footer.ministry">Ministerio Del Poder Popular para el Turismo (Mintur) G-20013132-2</p>
+                <p data-i18n="footer.address">Av. Principal de La Floresta con Av. Francisco de Miranda, Complejo Mintur
+                    Caracas, Edo.Miranda</p>
             </div>
         </footer>
 
