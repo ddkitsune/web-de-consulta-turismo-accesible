@@ -1,0 +1,277 @@
+/* Global Styles */
+:root {
+    --primary-blue: #245B98;
+    --navbar-bg: #F8F9FA;
+    --text-color: #333;
+    --text-light: #666;
+    --white: #ffffff;
+    --hover-gray: #e2e6ea;
+    --font-family: 'Nunito', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Section */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--white);
+    flex-wrap: wrap;
+    /* Allow wrapping on small screens */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-mpp {
+    height: 120px;
+    /* Ajustar segun vizualización */
+    object-fit: contain;
+}
+
+.logo-social {
+    height: 120px;
+    object-fit: contain;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.logo-bicentenario {
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--navbar-bg);
+    position: relative;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 0 20px;
+}
+
+.navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    /* Original seems left-aligned or spread */
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.nav-menu li {
+    position: relative;
+    padding: 15px 0;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #4a4a4a;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-menu a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--primary-blue);
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--white);
+    min-width: 220px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px 0;
+    z-index: 1001;
+    list-style: none;
+}
+
+.dropdown-content li {
+    padding: 0;
+}
+
+.dropdown-content a {
+    padding: 10px 20px;
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-color);
+    text-transform: none;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--hover-gray);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 10px;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 40px 20px;
+    background-color: var(--white);
+}
+
+.content-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center-logo-container {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.inatur-logo {
+    max-width: 300px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #A5D8FF;
+    /* Light blue bg as seen in source img */
+}
+
+.text-content {
+    text-align: justify;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4a4a4a;
+    max-width: 900px;
+}
+
+.social-links-bottom {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icon {
+    font-size: 2.5rem;
+    color: #dc2626;
+    /* Tailwind Red-600 */
+    transition: transform 0.2s;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Footer */
+.main-footer {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .nav-menu {
+        display: none;
+        /* Hide for now, requires JS for mobile toggle */
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: var(--navbar-bg);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px 0;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .navbar-container {
+        justify-content: space-between;
+    }
+
+    .logo-mpp {
+        height: 50px;
+    }
+
+    .logo-social {
+        height: 40px;
+    }
+
+    .logo-bicentenario {
+        height: 40px;
+    }
+}
