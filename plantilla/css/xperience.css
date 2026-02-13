@@ -111,10 +111,10 @@ nav ul li a:hover {
 
 /* Services / Categories */
 .services {
-    padding: 5rem 10%;
+    padding: 5rem 5%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
     margin-top: -100px;
 }
 
@@ -310,5 +310,10 @@ footer {
 
     .hero h1 {
         font-size: 2.5rem;
+    }
+
+    .services {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        padding: 5rem 10%;
     }
 }
