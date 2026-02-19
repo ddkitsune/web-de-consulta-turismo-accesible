@@ -3,21 +3,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.querySelector('.nav-menu');
 
     if (mobileBtn) {
-        mobileBtn.addEventListener('click', () => {
+        mobileBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent click from bubbling to document
             navMenu.classList.toggle('active');
         });
     }
 
-    // Optional: Add logic for mobile dropdowns if needed
-    // Currently, hover effect works on desktop, but mobile needs click approach
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && !mobileBtn.contains(e.target)) {
+            navMenu.classList.remove('active');
+        }
+    });
+
+    // Dropdown logic for mobile
     const dropdowns = document.querySelectorAll('.dropdown > a');
     dropdowns.forEach(drop => {
         drop.addEventListener('click', (e) => {
             if (window.innerWidth <= 1024) {
                 e.preventDefault();
+                e.stopPropagation();
                 const parent = drop.parentElement;
-                parent.querySelector('.dropdown-content').style.display = 
-                    parent.querySelector('.dropdown-content').style.display === 'block' ? 'none' : 'block';
+                const content = parent.querySelector('.dropdown-content');
+
+                // Close other open dropdowns
+                document.querySelectorAll('.dropdown-content').forEach(d => {
+                    if (d !== content) d.style.display = 'none';
+                });
+
+                // Toggle current
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+    });
+
+    // Close mobile menu when a link is clicked
+    const navLinks = document.querySelectorAll('.nav-menu a:not(.dropdown > a)');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 1024) {
+                navMenu.classList.remove('active');
             }
         });
     });
@@ -186,7 +211,7 @@ function changeLanguage(lang) {
         const key = el.getAttribute('data-i18n');
         const keys = key.split('.');
         let value = translations[lang];
-        
+
         for (const k of keys) {
             if (value && value[k]) {
                 value = value[k];

@@ -302,22 +302,231 @@ footer {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     header {
-        flex-direction: column;
+        flex-direction: row;
         gap: 1rem;
+        padding: 1rem 5%;
+        flex-wrap: wrap;
     }
 
-    nav ul {
-        gap: 1rem;
+    .header-left,
+    .header-right {
+        display: flex;
+        align-items: center;
+        width: auto;
+    }
+
+    .header-left {
+        flex: 1;
+        justify-content: flex-start;
+    }
+
+    .header-left img {
+        height: 60px;
+        /* Reduced logo size on mobile */
+    }
+
+    .header-right {
+        display: none;
+        /* Hide secondary logo on very small screens if needed, or adjust */
+    }
+
+    /* Navbar Container Position Fix */
+    .navbar {
+        width: 100%;
+        background: var(--white);
+        position: relative !important;
+        /* Force relative positioning */
+        z-index: 1000;
+        min-height: 60px;
+        /* Ensure it has height */
+        display: flex;
+        align-items: center;
+        padding: 0 5%;
+    }
+
+    .navbar-container {
+        display: flex;
+        justify-content: flex-end;
+        /* Align hamburger to right */
+        align-items: center;
+        width: 100%;
+        position: static;
+        /* Let parent navbar handle positioning context */
+    }
+
+    /* Mobile Menu Button - Positioned Correctly */
+    .mobile-menu-btn {
+        display: block !important;
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--primary);
+        margin-left: auto;
+        /* Push to the right */
+        padding: 0.5rem;
+    }
+
+    /* Navigation Menu Dropdown */
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: var(--white);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        padding: 1rem 0;
+        position: absolute;
+        /* Absolute relative to .navbar */
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        /* High z-index */
+        margin-top: 0;
+    }
+
+    .nav-menu.active {
+        display: flex !important;
+    }
+
+    .nav-menu li {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0px;
+    }
+
+    .nav-menu li a {
+        display: block;
+        padding: 1rem;
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        border-bottom: 1px solid #f1f5f9;
+        width: 100%;
+    }
+
+    /* Remove border from last item */
+    .nav-menu li:last-child a {
+        border-bottom: none;
+    }
+
+    /* Dropdowns */
+    .dropdown {
+        position: relative;
+        width: 100%;
+    }
+
+    .dropdown-content {
+        position: relative;
+        box-shadow: none;
+        background: #f8fafc;
+        display: none;
+        /* Controlled by JS */
+        top: 0;
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .dropdown-content li a {
+        padding: 0.8rem;
+        font-size: 1rem;
+        color: var(--text-muted);
+        background: transparent;
+        border-bottom: none;
+    }
+
+    /* Ensure hover doesn't interfere */
+    .dropdown:hover .dropdown-content {
+        display: none;
+    }
+
+    /* We use JS to toggle class 'open' or inline style display: block */
+
+    /* Hero */
+    .hero {
+        height: auto;
+        min-height: 60vh;
+        padding: 6rem 5% 4rem;
+        /* More top padding for navbar */
     }
 
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        line-height: 1.2;
     }
 
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    /* Grids */
     .services {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        padding: 5rem 10%;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        padding: 3rem 5%;
+        margin-top: -30px;
+        gap: 2rem;
+    }
+
+    .destinations,
+    .testimonials {
+        padding: 3rem 5%;
+    }
+
+    .destinations-grid,
+    .testimonial-grid {
+        gap: 2rem;
+        grid-template-columns: 1fr;
+    }
+
+    /* Footer */
+    footer {
+        padding: 3rem 5%;
+    }
+
+    .footer-main {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-left img {
+        height: 40px;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .service-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Base styles adjustments */
+.mobile-menu-btn {
+    display: none;
+    /* Hide on desktop */
+}
+
+/* Ensure desktop dropdowns still work */
+@media (min-width: 1025px) {
+    .dropdown:hover .dropdown-content {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
