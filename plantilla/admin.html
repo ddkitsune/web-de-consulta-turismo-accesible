@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Turismo Accesible</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/xperience.css">
+    <style>
+        :root {
+            --admin-primary: #1e293b;
+            --admin-secondary: #334155;
+            --admin-accent: #3b82f6;
+        }
+
+        body {
+            background-color: #f1f5f9;
+        }
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Style */
+        .sidebar {
+            width: 280px;
+            background: var(--admin-primary);
+            color: white;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .sidebar-header img {
+            width: 150px;
+            margin-bottom: 1rem;
+        }
+
+        .nav-admin {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-admin li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-admin a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #94a3b8;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-admin a:hover,
+        .nav-admin a.active {
+            background: var(--admin-secondary);
+            color: white;
+        }
+
+        /* Main Content Style */
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem 3rem;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .welcome-text h1 {
+            font-size: 1.5rem;
+            color: var(--admin-primary);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--admin-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-card h2 {
+            margin-bottom: 2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        input,
+        textarea,
+        select {
+            padding: 0.8rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--admin-accent);
+        }
+
+        /* Accessibilities Checkboxes */
+        .access-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 0.5rem;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .check-item input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-save {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .btn-save:hover {
+            background: #1a457a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/logo_left.png" alt="MINTUR Logo" style="filter: brightness(0) invert(1);">
+                <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">MINTUR ADMINISTRACIÓN</p>
+            </div>
+
+            <ul class="nav-admin">
+                <li><a href="#" class="active"><i class="fas fa-plus-circle"></i> Agregar Ruta</a></li>
+                <li><a href="#"><i class="fas fa-map-marked-alt"></i> Gestionar Rutas</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Usuarios</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+            </ul>
+
+            <a href="turismo_accesible_xperience.html"
+                style="margin-top: auto; color: #f87171; text-decoration: none; padding: 1rem; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-sign-out-alt"></i> Salir del Panel
+            </a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="welcome-text">
+                    <h1>Bienvenido, <strong>Administrador</strong></h1>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">AD</div>
+                    <span style="font-weight: 600;">Deivy Admin</span>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="form-card">
+                <h2><i class="fas fa-map-plus"></i> Nueva Ruta Turística Accesible</h2>
+
+                <form id="add-route-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Nombre del Destino</label>
+                            <input type="text" id="name" placeholder="Ej. El Paramo, Mérida" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="region">Región / Estado</label>
+                            <select id="region">
+                                <option value="merida">Mérida</option>
+                                <option value="nueva-esparta">Nueva Esparta</option>
+                                <option value="falcon">Falcón</option>
+                                <option value="distrito-capital">Distrito Capital</option>
+                                <option value="bolivar">Bolívar</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="image">Imagen del Destino (URL por ahora)</label>
+                            <input type="text" id="image" placeholder="assets/imagen/..." required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="desc">Descripción (Español)</label>
+                            <textarea id="desc" rows="4"
+                                placeholder="Describe los atractivos y el nivel de accesibilidad..."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Etiquetas de Accesibilidad</label>
+                            <div class="access-options">
+                                <label class="check-item"><input type="checkbox"> <i class="fas fa-wheelchair"></i>
+                                    Rampa</label>
+                                <label class="check-item"><input type="checkbox"> <i class="fas fa-braille"></i>
+                                    Braille</label>
+                                <label class="check-item"><input type="checkbox"> <i class="fas fa-elevator"></i>
+                                    Ascensor</label>
+                                <label class="check-item"><input type="checkbox"> <i class="fas fa-chair"></i> Silla
+                                    Anfibia</label>
+                                <label class="check-item"><input type="checkbox"> <i class="fas fa-hiking"></i> Guía
+                                    Especializado</label>
+                                <label class="check-item"><input type="checkbox"> <i class="fas fa-bus"></i> Transporte
+                                    Adaptado</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-save">Publicar Destino Accesible</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('add-route-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Ruta guardada exitosamente (Simulación)! En el futuro, esto se enviará a PostgreSQL a través de Laravel.');
+        });
+    </script>
+</body>
+
+</html>

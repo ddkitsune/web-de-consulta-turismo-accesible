@@ -16,8 +16,19 @@
 
 <body>
 
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="skip-link" data-i18n="nav.skip">Saltar al contenido principal</a>
+
+    <!-- Accessibility Floating Menu -->
+    <div class="accessibility-menu">
+        <button id="toggle-contrast" class="btn-tool" title="Modo Accesibilidad Radical"
+            aria-label="Cambiar a modo alto contraste">
+            <i class="fas fa-universal-access"></i>
+        </button>
+    </div>
+
     <!-- Main Container from index.html -->
-    <div class="app-container">
+    <div class="app-container" id="main-content">
 
         <!-- Header Logos Section (from index.html) -->
         <header class="main-header">
@@ -99,18 +110,77 @@
         <!-- Hero Section -->
         <section class="hero"
             style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1531279554030-97426613388a?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;">
-            <h1 data-i18n="hero.title">Venezuela para Todos</h1>
-            <p data-i18n="hero.subtitle">Descubre los destinos más espectaculares de nuestra tierra con total
-                accesibilidad y servicios adaptados
-                a tus necesidades.</p>
-            <div class="hero-btns">
-                <a href="#" class="btn-reserve" style="background: var(--secondary);" data-i18n="hero.cta">Ver
-                    Destinos</a>
+            <div class="hero-content">
+                <h1 data-i18n="hero.title">Venezuela para Todos</h1>
+                <h2 class="slogan" data-i18n="hero.slogan">"Belleza sin Barreras"</h2>
+                <p data-i18n="hero.subtitle">Descubre los destinos más espectaculares de nuestra tierra con total
+                    accesibilidad y servicios adaptados
+                    a tus necesidades.</p>
+                <div class="hero-btns">
+                    <a href="#destinos" class="btn-reserve" style="background: var(--secondary);"
+                        data-i18n="hero.cta">Ver
+                        Destinos</a>
+                    <button onclick="playVoiceOver()" class="btn-voice" aria-label="Reproducir voz en off">
+                        <i class="fas fa-volume-up"></i> <span data-i18n="hero.voice">Escuchar</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accessibility Info Section -->
+        <section class="accessibility-info" id="que-es">
+            <div class="info-container">
+                <div class="info-text">
+                    <div style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 data-i18n="info.title" style="margin-bottom: 0;">¿Qué es el Turismo Accesible?</h2>
+                        <button onclick="playVoiceOver('que-es')" class="btn-voice-section"
+                            aria-label="Escuchar sección">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                    <p data-i18n="info.desc">El turismo accesible es aquel que permite la igualdad de oportunidades de
+                        todas las personas para desarrollar la actividad turística de una manera segura, cómoda,
+                        autónoma y normalizada. Es eliminar barreras para que todos, sin importar su condición física o
+                        cognitiva, disfruten de Venezuela.</p>
+
+                    <div class="disability-types">
+                        <div class="type-item">
+                            <i class="fas fa-wheelchair"></i>
+                            <span data-i18n="info.types.physical">Física o Motora</span>
+                        </div>
+                        <div class="type-item">
+                            <i class="fas fa-eye-slash"></i>
+                            <span data-i18n="info.types.visual">Visual</span>
+                        </div>
+                        <div class="type-item">
+                            <i class="fas fa-deaf"></i>
+                            <span data-i18n="info.types.auditory">Auditiva</span>
+                        </div>
+                        <div class="type-item">
+                            <i class="fas fa-brain"></i>
+                            <span data-i18n="info.types.cognitive">Cognitiva</span>
+                        </div>
+                    </div>
+
+                    <a href="http://conapdis.gob.ve/wordpress/" target="_blank" class="btn-conapdis">
+                        <span data-i18n="info.more">Más información en CONAPDIS</span> <i
+                            class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                <div class="info-image">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=800&auto=format&fit=crop"
+                        alt="Accesibilidad Universal">
+                </div>
             </div>
         </section>
 
         <!-- Categories / Services -->
-        <section class="services">
+        <section class="services" id="servicios">
+            <div style="position: absolute; top: 10px; right: 10px;">
+                <button onclick="playVoiceOver('servicios')" class="btn-voice-section" aria-label="Escuchar servicios">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
             <div class="service-card">
                 <i class="fas fa-map-marked-alt"></i>
                 <h3 data-i18n="services.custom.title">Viajes a Medida</h3>
@@ -139,9 +209,15 @@
         </section>
 
         <!-- Featured Destinations -->
-        <section class="destinations">
+        <section class="destinations" id="destinos">
             <div class="section-header">
-                <h2 data-i18n="destinations.title">Nuestros Destinos Accesibles</h2>
+                <div class="section-title-wrapper">
+                    <h2 data-i18n="destinations.title" style="margin-bottom: 0;">Nuestros Destinos Accesibles</h2>
+                    <button onclick="playVoiceOver('destinos')" class="btn-voice-section"
+                        aria-label="Escuchar destinos">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
                 <p data-i18n="destinations.subtitle">Seleccionamos los mejores rincones de Venezuela con infraestructura
                     garantizada.</p>
             </div>
@@ -154,10 +230,32 @@
                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="dest-content">
+                        <div class="dest-badges">
+                            <span class="badge badge-blue"><i class="fas fa-wheelchair"></i> Rampa</span>
+                            <span class="badge badge-green"><i class="fas fa-hiking"></i> Guía</span>
+                        </div>
                         <h3 data-i18n="destinations.canaima.title">Canaima: La Selva Ancestral</h3>
                         <p data-i18n="destinations.canaima.desc">Disfruta de la majestuosidad del Salto Ángel con
                             traslados adaptados y alojamientos de primer
                             nivel en el corazón de la selva.</p>
+                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
+                    </div>
+                </div>
+
+                <!-- Mérida -->
+                <div class="dest-card">
+                    <div class="dest-img">
+                        <img src="assets/imagen/merida.jpg" alt="Mérida"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="dest-content">
+                        <div class="dest-badges">
+                            <span class="badge badge-blue"><i class="fas fa-elevator"></i> Ascensor</span>
+                            <span class="badge badge-purple"><i class="fas fa-braille"></i> Braille</span>
+                        </div>
+                        <h3 data-i18n="destinations.merida.title">Mérida: Cumbres Nevada</h3>
+                        <p data-i18n="destinations.merida.desc">Siente el frío de los Andes en el Teleférico Mucumbarí,
+                            el más alto del mundo, totalmente diseñado para accesibilidad universal.</p>
                         <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
                     </div>
                 </div>
@@ -169,10 +267,31 @@
                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="dest-content">
+                        <div class="dest-badges">
+                            <span class="badge badge-blue"><i class="fas fa-chair"></i> Silla Anfibias</span>
+                            <span class="badge badge-green"><i class="fas fa-walking"></i> Pasarela</span>
+                        </div>
                         <h3 data-i18n="destinations.morrocoy.title">Morrocoy: Playas Turquesa</h3>
                         <p data-i18n="destinations.morrocoy.desc">Cayos con pasarelas de madera, sillas anfibias y
                             personal capacitado para que vivas el Caribe
                             venezolano sin límites.</p>
+                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
+                    </div>
+                </div>
+
+                <!-- Margarita -->
+                <div class="dest-card">
+                    <div class="dest-img">
+                        <img src="assets/imagen/margarita.jpg" alt="Margarita"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="dest-content">
+                        <div class="dest-badges">
+                            <span class="badge badge-purple"><i class="fas fa-hotel"></i> Hotel Adaptado</span>
+                        </div>
+                        <h3 data-i18n="destinations.margarita.title">Margarita: La Perla del Caribe</h3>
+                        <p data-i18n="destinations.margarita.desc">Disfruta de hoteles boutique con habitaciones
+                            adaptadas y playas con servicios de asistencia para movilidad reducida.</p>
                         <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
                     </div>
                 </div>
@@ -184,6 +303,10 @@
                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="dest-content">
+                        <div class="dest-badges">
+                            <span class="badge badge-blue"><i class="fas fa-bus"></i> Transporte</span>
+                            <span class="badge badge-green"><i class="fas fa-museum"></i> Museos</span>
+                        </div>
                         <h3 data-i18n="destinations.caracas.title">Caracas: Cultura y Ciudad</h3>
                         <p data-i18n="destinations.caracas.desc">Un recorrido por el centro histórico, el Teleférico
                             Warairarepano y los museos más
@@ -191,13 +314,36 @@
                         <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
                     </div>
                 </div>
+
+                <!-- Colonia Tovar -->
+                <div class="dest-card">
+                    <div class="dest-img">
+                        <img src="assets/imagen/colonia_tovar.jpg" alt="Colonia Tovar"
+                            style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="dest-content">
+                        <div class="dest-badges">
+                            <span class="badge badge-blue"><i class="fas fa-road"></i> Rampas</span>
+                        </div>
+                        <h3 data-i18n="destinations.tovar.title">Colonia Tovar: Selva y Tradición</h3>
+                        <p data-i18n="destinations.tovar.desc">Un pedazo de Alemania en el trópico. Rutas gastronómicas
+                            y paseos por el pueblo con rampas y accesos nivelados.</p>
+                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Testimonials -->
-        <section class="testimonials">
+        <section class="testimonials" id="testimonios">
             <div class="section-header">
-                <h2 data-i18n="testimonials.title">Experiencias que Inspiran</h2>
+                <div class="section-title-wrapper">
+                    <h2 data-i18n="testimonials.title" style="margin-bottom: 0;">Experiencias que Inspiran</h2>
+                    <button onclick="playVoiceOver('testimonios')" class="btn-voice-section"
+                        aria-label="Escuchar testimonios">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
             </div>
             <div class="testimonial-grid">
                 <div class="testimonial-card">

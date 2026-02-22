@@ -72,12 +72,26 @@ const translations = {
             plate: "PLACA DE IDENTIFICACIÓN",
             tech: "FACTIBILIDAD TÉCNICA",
             prevention: "PREVENCIÓN DE LC/FT/FPADM",
-            guide: "GUÍA TURÍSTICA"
+            guide: "GUÍA TURÍSTICA",
+            skip: "Saltar al contenido principal"
         },
         hero: {
             title: "Venezuela para Todos",
+            slogan: '"Belleza sin Barreras"',
             subtitle: "Descubre los destinos más espectaculares de nuestra tierra con total accesibilidad y servicios adaptados a tus necesidades.",
-            cta: "Ver Destinos"
+            cta: "Ver Destinos",
+            voice: "Escuchar"
+        },
+        info: {
+            title: "¿Qué es el Turismo Accesible?",
+            desc: "El turismo accesible es aquel que permite la igualdad de oportunidades de todas las personas para desarrollar la actividad turística de una manera segura, cómoda, autónoma y normalizada. Es eliminar barreras para que todos, sin importar su condición física o cognitiva, disfruten de Venezuela.",
+            types: {
+                physical: "Física o Motora",
+                visual: "Visual",
+                auditory: "Auditiva",
+                cognitive: "Cognitiva"
+            },
+            more: "Más información en CONAPDIS"
         },
         services: {
             custom: { title: "Viajes a Medida", desc: "Diseñamos tu experiencia personalizada por toda Venezuela." },
@@ -100,6 +114,18 @@ const translations = {
             caracas: {
                 title: "Caracas: Cultura y Ciudad",
                 desc: "Un recorrido por el centro histórico, el Teleférico Warairarepano y los museos más emblemáticos con accesibilidad total."
+            },
+            merida: {
+                title: "Mérida: Cumbres Nevada",
+                desc: "Siente el frío de los Andes en el Teleférico Mucumbarí, el más alto del mundo, totalmente diseñado para accesibilidad universal."
+            },
+            margarita: {
+                title: "Margarita: La Perla del Caribe",
+                desc: "Disfruta de hoteles boutique con habitaciones adaptadas y playas con servicios de asistencia para movilidad reducida."
+            },
+            tovar: {
+                title: "Colonia Tovar: Selva y Tradición",
+                desc: "Un pedazo de Alemania en el trópico. Rutas gastronómicas y paseos por el pueblo con rampas y accesos nivelados."
             }
         },
         common: { view_itinerary: "Ver Itinerario" },
@@ -145,12 +171,26 @@ const translations = {
             plate: "IDENTIFICATION PLATE",
             tech: "TECHNICAL FEASIBILITY",
             prevention: "PREVENTION OF ML/FT/FPADM",
-            guide: "TOURIST GUIDE"
+            guide: "TOURIST GUIDE",
+            skip: "Skip to main content"
         },
         hero: {
             title: "Venezuela for Everyone",
+            slogan: '"Beauty without Barriers"',
             subtitle: "Discover the most spectacular destinations of our land with total accessibility and services adapted to your needs.",
-            cta: "View Destinations"
+            cta: "View Destinations",
+            voice: "Listen"
+        },
+        info: {
+            title: "What is Accessible Tourism?",
+            desc: "Accessible tourism allows equal opportunities for all people to develop tourist activities in a safe, comfortable, autonomous, and standardized way. It's about removing barriers so everyone, regardless of their physical or cognitive condition, can enjoy Venezuela.",
+            types: {
+                physical: "Physical or Motor",
+                visual: "Visual",
+                auditory: "Auditory",
+                cognitive: "Cognitive"
+            },
+            more: "More information at CONAPDIS"
         },
         services: {
             custom: { title: "Custom Trips", desc: "We design your personalized experience throughout Venezuela." },
@@ -173,6 +213,18 @@ const translations = {
             caracas: {
                 title: "Caracas: Culture & City",
                 desc: "A tour of the historic center, the Warairarepano Cable Car, and the most emblematic museums with total accessibility."
+            },
+            merida: {
+                title: "Mérida: Snowy Peaks",
+                desc: "Feel the Andean cold at the Mucumbarí Cable Car, the highest in the world, fully designed for universal accessibility."
+            },
+            margarita: {
+                title: "Margarita: The Caribbean Pearl",
+                desc: "Enjoy boutique hotels with adapted rooms and beaches with assistance services for reduced mobility."
+            },
+            tovar: {
+                title: "Colonia Tovar: Jungle & Tradition",
+                desc: "A piece of Germany in the tropics. Gastronomic routes and town tours with ramps and leveled access."
             }
         },
         common: { view_itinerary: "View Itinerary" },
@@ -227,8 +279,57 @@ function changeLanguage(lang) {
     });
 }
 
-// Initialize Language on Load
+// Initialize Language and Accessibility on Load
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('preferredLanguage') || 'es';
     changeLanguage(savedLang);
+
+    // Initial Radical Access Check
+    if (localStorage.getItem('radicalAccess') === 'enabled') {
+        document.body.classList.add('radical-access');
+    }
+
+    // Toggle Radical Access
+    const toggleBtn = document.getElementById('toggle-contrast');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('radical-access');
+            const isEnabled = document.body.classList.contains('radical-access');
+            localStorage.setItem('radicalAccess', isEnabled ? 'enabled' : 'disabled');
+        });
+    }
 });
+
+// Voice-over functionality
+function playVoiceOver(sectionId) {
+    const lang = document.documentElement.lang || 'es';
+    let textToRead = "";
+
+    if (sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            // Get all text from children that have data-i18n or are headings/paragraphs
+            const elements = section.querySelectorAll('h1, h2, h3, p, [data-i18n]');
+            const texts = Array.from(elements).map(el => el.textContent.trim());
+            textToRead = [...new Set(texts)].join(". "); // Remove duplicates and join
+        }
+    } else {
+        // Fallback or default (Hero behavior)
+        const title = document.querySelector('[data-i18n="hero.title"]')?.textContent || "";
+        const slogan = document.querySelector('[data-i18n="hero.slogan"]')?.textContent || "";
+        const subtitle = document.querySelector('[data-i18n="hero.subtitle"]')?.textContent || "";
+        textToRead = `${title}. ${slogan}. ${subtitle}`;
+    }
+
+    if (!textToRead) return;
+
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.lang = lang === 'es' ? 'es-ES' : 'en-US';
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+
+    window.speechSynthesis.speak(utterance);
+}
