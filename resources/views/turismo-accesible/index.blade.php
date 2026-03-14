@@ -12,6 +12,8 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/xperience.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 
 <body>
@@ -50,16 +52,16 @@
                 </button>
 
                 <ul class="nav-menu">
-                    <li><a href="#" data-i18n="nav.home">INICIO</a></li>
+                    <li><a href="index.html" data-i18n="nav.home">INICIO</a></li>
 
                     <li class="dropdown">
                         <a href="#"><span data-i18n="nav.ministry">EL MINISTERIO</span> <i
                                 class="fas fa-chevron-down"></i></a>
                         <ul class="dropdown-content">
-                            <li><a href="#" data-i18n="nav.mission">MISIÓN Y VISIÓN</a></li>
-                            <li><a href="#" data-i18n="nav.org">ORGANIGRAMA</a></li>
-                            <li><a href="#" data-i18n="nav.minister">MINISTRA</a></li>
-                            <li><a href="#" data-i18n="nav.competence">COMPETENCIAS</a></li>
+                            <li><a href="ministerio.html" data-i18n="nav.mission">MISIÓN Y VISIÓN</a></li>
+                            <li><a href="ministerio.html" data-i18n="nav.org">ORGANIGRAMA</a></li>
+                            <li><a href="ministerio.html" data-i18n="nav.minister">MINISTRA</a></li>
+                            <li><a href="ministerio.html" data-i18n="nav.competence">COMPETENCIAS</a></li>
                         </ul>
                     </li>
 
@@ -218,120 +220,121 @@
                         <i class="fas fa-volume-up"></i>
                     </button>
                 </div>
-                <p data-i18n="destinations.subtitle">Seleccionamos los mejores rincones de Venezuela con infraestructura
-                    garantizada.</p>
+                <p data-i18n="destinations.subtitle">Seleccionamos los mejores rincones de Venezuela con infraestructura garantizada.</p>
+            </div>
+
+            <!-- Panel de Filtros Interactivo -->
+            <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 30px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                <form action="{{ route('home') }}#destinos" method="GET" style="display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end;">
+                    
+                    <div style="flex: 1; min-width: 200px;">
+                        <label for="search" style="display: block; font-size: 0.875rem; font-weight: 600; color: #475569; margin-bottom: 5px;">Buscar por nombre o descripción:</label>
+                        <div style="position: relative;">
+                            <i class="fas fa-search" style="position: absolute; left: 12px; top: 12px; color: #94a3b8;"></i>
+                            <input type="text" id="search" name="search" value="{{ request('search') }}" placeholder="Ej. Playa, Montaña, Caracas..." style="width: 100%; padding: 10px 10px 10px 35px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; transition: border-color 0.2s;">
+                        </div>
+                    </div>
+
+                    <div style="flex: 1; min-width: 200px;">
+                        <label for="location_id" style="display: block; font-size: 0.875rem; font-weight: 600; color: #475569; margin-bottom: 5px;">Filtrar por Ubicación:</label>
+                        <select id="location_id" name="location_id" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background-color: white;">
+                            <option value="">Cualquier ubicación</option>
+                            @foreach($locations as $location)
+                                <option value="{{ $location->id }}" {{ request('location_id') == $location->id ? 'selected' : '' }}>
+                                    {{ $location->name }} ({{ $location->state }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div style="flex: 1; min-width: 200px;">
+                        <label for="disability_id" style="display: block; font-size: 0.875rem; font-weight: 600; color: #475569; margin-bottom: 5px;">Adaptado para:</label>
+                        <select id="disability_id" name="disability_id" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; background-color: white;">
+                            <option value="">Todas las discapacidades</option>
+                            @foreach($disabilities as $disability)
+                                <option value="{{ $disability->id }}" {{ request('disability_id') == $disability->id ? 'selected' : '' }}>
+                                    {{ $disability->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn-reserve" style="background: var(--primary); border: none; padding: 12px 24px; cursor: pointer; border-radius: 6px; font-weight: bold;">
+                            <i class="fas fa-filter"></i> Filtrar Destinos
+                        </button>
+                        
+                        @if(request()->hasAny(['search', 'location_id', 'disability_id']))
+                            <a href="{{ route('home') }}#destinos" style="display: inline-block; margin-left: 10px; color: #ef4444; text-decoration: none; font-size: 0.875rem; font-weight: 600;">
+                                <i class="fas fa-times"></i> Limpiar Filtros
+                            </a>
+                        @endif
+                    </div>
+                </form>
             </div>
 
             <div class="destinations-grid">
-                <!-- Canaima -->
+                @foreach($destinations as $destination)
                 <div class="dest-card">
                     <div class="dest-img">
-                        <img src="assets/imagen/canaima.jpg" alt="Salto Angel"
+                        @if($destination->image)
+                        <img src="{{ str_starts_with($destination->image, 'assets/') ? asset($destination->image) : Storage::url($destination->image) }}" alt="{{ $destination->title }}"
                             style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                        <div style="width: 100%; height: 100%; background-color: #f3f4f6; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
+                            Sin Imagen
+                        </div>
+                        @endif
                     </div>
                     <div class="dest-content">
-                        <div class="dest-badges">
-                            <span class="badge badge-blue"><i class="fas fa-wheelchair"></i> Rampa</span>
-                            <span class="badge badge-green"><i class="fas fa-hiking"></i> Guía</span>
+                        <div class="dest-badges" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                @foreach($destination->disabilities as $disability)
+                                <span class="badge" style="background-color: var(--primary); color: white;" title="{{ $disability->name }}">
+                                    <i class="{{ $disability->icon }}"></i> <span class="hidden sm:inline">{{ substr($disability->name, 0, 10) }}</span>
+                                </span>
+                                @endforeach
+                            </div>
+                            <!-- Botón Inteligente de Voz Individual -->
+                            <button onclick="playSpecificVoice('{{ addslashes($destination->title) }}. {{ addslashes($destination->description) }}')" 
+                                    class="btn-voice-section" 
+                                    style="position: relative; top: 0; right: 0; transform: scale(0.8);"
+                                    title="Escuchar información de esta ruta"
+                                    aria-label="Escuchar detalle de {{ $destination->title }}">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
                         </div>
-                        <h3 data-i18n="destinations.canaima.title">Canaima: La Selva Ancestral</h3>
-                        <p data-i18n="destinations.canaima.desc">Disfruta de la majestuosidad del Salto Ángel con
-                            traslados adaptados y alojamientos de primer
-                            nivel en el corazón de la selva.</p>
-                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
+                        <h3>{{ $destination->title }}</h3>
+                        <p class="text-sm font-semibold" style="color: var(--secondary);">
+                            <i class="fas fa-map-marker-alt"></i> {{ optional($destination->location)->name }} ({{ optional($destination->location)->state }})
+                        </p>
+                        <p>{{ Str::limit($destination->description, 120) }}</p>
+                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Detalle</a>
                     </div>
                 </div>
-
-                <!-- Mérida -->
-                <div class="dest-card">
-                    <div class="dest-img">
-                        <img src="assets/imagen/merida.jpg" alt="Mérida"
-                            style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="dest-content">
-                        <div class="dest-badges">
-                            <span class="badge badge-blue"><i class="fas fa-elevator"></i> Ascensor</span>
-                            <span class="badge badge-purple"><i class="fas fa-braille"></i> Braille</span>
-                        </div>
-                        <h3 data-i18n="destinations.merida.title">Mérida: Cumbres Nevada</h3>
-                        <p data-i18n="destinations.merida.desc">Siente el frío de los Andes en el Teleférico Mucumbarí,
-                            el más alto del mundo, totalmente diseñado para accesibilidad universal.</p>
-                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
-                    </div>
+                @endforeach
+                
+                @if($destinations->isEmpty())
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                    <p>Actualmente no hay destinos disponibles en nuestro catálogo.</p>
                 </div>
-
-                <!-- Morrocoy -->
-                <div class="dest-card">
-                    <div class="dest-img">
-                        <img src="assets/imagen/morrocoy.jpg" alt="Morrocoy"
-                            style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="dest-content">
-                        <div class="dest-badges">
-                            <span class="badge badge-blue"><i class="fas fa-chair"></i> Silla Anfibias</span>
-                            <span class="badge badge-green"><i class="fas fa-walking"></i> Pasarela</span>
-                        </div>
-                        <h3 data-i18n="destinations.morrocoy.title">Morrocoy: Playas Turquesa</h3>
-                        <p data-i18n="destinations.morrocoy.desc">Cayos con pasarelas de madera, sillas anfibias y
-                            personal capacitado para que vivas el Caribe
-                            venezolano sin límites.</p>
-                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
-                    </div>
-                </div>
-
-                <!-- Margarita -->
-                <div class="dest-card">
-                    <div class="dest-img">
-                        <img src="assets/imagen/margarita.jpg" alt="Margarita"
-                            style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="dest-content">
-                        <div class="dest-badges">
-                            <span class="badge badge-purple"><i class="fas fa-hotel"></i> Hotel Adaptado</span>
-                        </div>
-                        <h3 data-i18n="destinations.margarita.title">Margarita: La Perla del Caribe</h3>
-                        <p data-i18n="destinations.margarita.desc">Disfruta de hoteles boutique con habitaciones
-                            adaptadas y playas con servicios de asistencia para movilidad reducida.</p>
-                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
-                    </div>
-                </div>
-
-                <!-- Caracas -->
-                <div class="dest-card">
-                    <div class="dest-img">
-                        <img src="assets/imagen/caracas.jpg" alt="Caracas"
-                            style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="dest-content">
-                        <div class="dest-badges">
-                            <span class="badge badge-blue"><i class="fas fa-bus"></i> Transporte</span>
-                            <span class="badge badge-green"><i class="fas fa-museum"></i> Museos</span>
-                        </div>
-                        <h3 data-i18n="destinations.caracas.title">Caracas: Cultura y Ciudad</h3>
-                        <p data-i18n="destinations.caracas.desc">Un recorrido por el centro histórico, el Teleférico
-                            Warairarepano y los museos más
-                            emblemáticos con accesibilidad total.</p>
-                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
-                    </div>
-                </div>
-
-                <!-- Colonia Tovar -->
-                <div class="dest-card">
-                    <div class="dest-img">
-                        <img src="assets/imagen/colonia_tovar.jpg" alt="Colonia Tovar"
-                            style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <div class="dest-content">
-                        <div class="dest-badges">
-                            <span class="badge badge-blue"><i class="fas fa-road"></i> Rampas</span>
-                        </div>
-                        <h3 data-i18n="destinations.tovar.title">Colonia Tovar: Selva y Tradición</h3>
-                        <p data-i18n="destinations.tovar.desc">Un pedazo de Alemania en el trópico. Rutas gastronómicas
-                            y paseos por el pueblo con rampas y accesos nivelados.</p>
-                        <a href="#" class="btn-outline" data-i18n="common.view_itinerary">Ver Itinerario</a>
-                    </div>
-                </div>
+                @endif
             </div>
+        </section>
+
+        <!-- Interactive Map Section -->
+        <section class="interactive-map p-6 bg-white" id="mapa">
+            <div class="section-header">
+                <div class="section-title-wrapper">
+                    <h2 data-i18n="map.title" style="margin-bottom: 0;">Explora en el Mapa</h2>
+                    <button onclick="playVoiceOver('mapa')" class="btn-voice-section" aria-label="Escuchar sección mapa">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                <p data-i18n="map.subtitle" class="mb-4">Ubica geográficamente todos nuestros destinos y planifica tu ruta de viaje accesible.</p>
+            </div>
+            
+            <div id="venezuela-map" style="height: 500px; width: 100%; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1;"></div>
         </section>
 
         <!-- Testimonials -->
@@ -403,6 +406,7 @@
     </div> <!-- End app-container -->
 
     <script src="js/script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
         // Smooth scroll mock
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -416,6 +420,57 @@
                             behavior: 'smooth'
                         });
                     }
+                }
+            });
+        });
+
+        // Inicializar el mapa de Leaflet centrado en Venezuela
+        document.addEventListener('DOMContentLoaded', function() {
+            // Coordenadas centrales de Venezuela con zoom nivel 5
+            var map = L.map('venezuela-map').setView([7.5, -66.1], 5);
+
+            // Agregar la capa de mapa base de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Definir un icono personalizado para los marcadores de accesibilidad
+            var accessibleIcon = L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            // Extraer rutas de la base de datos que pasamos por variable de Blade
+            var destinations = @json($destinations);
+
+            // Agregar marcadores dinámicos
+            destinations.forEach(function(dest) {
+                // Solo colocar los que tienen latitud y longitud válida numérica
+                if (dest.latitude && dest.longitude && !isNaN(dest.latitude) && !isNaN(dest.longitude)) {
+                    // Texto rápido del popup
+                    var facilitiesInfo = dest.disabilities.map(function(d){ return d.name; }).join(', ');
+                    if(facilitiesInfo == "") facilitiesInfo = "No se especificó accesibilidad específica";
+
+                    // Imagen en el tooltip
+                    var imagePath = dest.image ? (dest.image.startsWith('assets/') ? dest.image : '/storage/' + dest.image) : '';
+                    var imgHtml = imagePath ? '<img src="' + imagePath + '" style="width:100%; height:90px; object-fit:cover; border-radius:4px; margin-bottom:5px;">' : '';
+
+                    var marker = L.marker([dest.latitude, dest.longitude], {icon: accessibleIcon}).addTo(map);
+                    
+                    var popupContent = `
+                        <div style="width: 200px;">
+                            ${imgHtml}
+                            <h4 style="margin: 0 0 5px 0; color: #1e40af; font-size: 14px;">${dest.title}</h4>
+                            <p style="margin: 0 0 5px 0; font-size: 12px; color: #4b5563;"><i class="fas fa-map-marker-alt"></i> ${dest.location ? dest.location.name : 'Vzla'}</p>
+                            <p style="margin: 0; font-size: 11px; font-weight: bold; color: #047857;">Accesible para:</p>
+                            <p style="margin: 0; font-size: 11px; color: #374151;">${facilitiesInfo}</p>
+                        </div>
+                    `;
+                    marker.bindPopup(popupContent);
                 }
             });
         });
